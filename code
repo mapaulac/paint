@@ -1,0 +1,117 @@
+boolean layer1 = true;
+boolean layer2 = false;
+boolean layer3 = false;
+boolean drawplease = false;
+boolean restartDrawing = false;
+int rectWidth = 150;
+int rectHeight = 50;
+
+int[] xlayer1 = {};
+int[] ylayer1 = {};
+
+int[] xlayer2 = {};
+int[] ylayer2 = {};
+
+int[] xlayer3 = {};
+int[] ylayer3 = {};
+
+void setup(){
+ size(600,600);
+ background(255,255,255);
+}
+
+void draw(){
+ //reseting background 
+ if (restartDrawing == true){
+ background(255,255,255);
+ }
+ //making hover buttons
+ noStroke();
+ fill(230,209,217);
+ rect(20,20,50,50);
+ fill(189,188,189);
+ rect(70,20,50,50);
+ fill(92,90,91);
+ rect(120,20,50,50);
+ //checks if person is drawing, saves the coordinates into arrays
+ if (layer1 == true){
+ int Xcoordinate = mouseX;
+ int Ycoordinate = mouseY;
+ xlayer1 = append(xlayer1, Xcoordinate);
+ ylayer1 = append(ylayer1, Ycoordinate);
+ stroke(230,209,217);
+ strokeWeight(1.5);
+ line(mouseX,mouseY,pmouseX,pmouseY);
+ }
+ 
+ else if (layer2 == true){
+ int Xcoordinate = mouseX;
+ int Ycoordinate = mouseY;
+ xlayer2 = append(xlayer2, Xcoordinate);
+ ylayer2 =append(ylayer2, Ycoordinate);
+ stroke(189,188,189);
+ line(mouseX,mouseY,pmouseX,pmouseY);
+ }
+ 
+ else if (layer3 == true){
+ println("case 3");
+ int Xcoordinate = mouseX;
+ int Ycoordinate = mouseY;
+ xlayer3 = append(xlayer3, Xcoordinate);
+ ylayer3 = append(ylayer3, Ycoordinate);
+ //stroke(79,76,77);
+ stroke(92,90,91);
+ line(mouseX,mouseY,pmouseX,pmouseY);
+ }
+ 
+ //checks where mouse is located, shows specific layers depending on this
+ if (drawplease == true){
+ restartDrawing = true;
+ if (20 < mouseX && mouseX < 70 && 20 < mouseY && mouseY < 70){
+ println("first layer visible");
+ for (int i = 0; i < (xlayer1.length - 1); i++){
+ stroke(230,209,217);
+ //strokeWeight(2);
+ line(xlayer1[i],ylayer1[i],xlayer1[i+1],ylayer1[i+1]); 
+ }
+ }
+ else if (70 <= mouseX && mouseX < 120 && 20 < mouseY && mouseY < 70){
+ println("second layer visible");
+ for (int l = 0; l < (xlayer2.length - 1); l++){
+ stroke(189,188,189);
+ line(xlayer2[l],ylayer2[l],xlayer2[l+1],ylayer2[l+1]); 
+ }
+ }
+ else if (120 <= mouseX && mouseX < 170 && 20 < mouseY && mouseY < 70){
+ println("third layer visible");
+ for (int s = 0; s < (xlayer3.length - 1); s++){
+ //stroke(79,76,77);
+ stroke(92,90,91);
+ line(xlayer3[s],ylayer3[s],xlayer3[s+1],ylayer3[s+1]); 
+ }
+ }
+}
+
+}
+ //checks if mouse is pressed. if so, stops drawing layers and saves 
+void mouseClicked(){
+ if (layer1 == true){
+ layer1 = false;
+ layer2 = true;
+ layer3 = false;
+ print("first save",layer1,layer2,layer3);
+ }
+ else if (layer2 == true){
+ layer1 = false;
+ layer2 = false;
+ layer3 = true;
+ println("second save",layer1,layer2,layer3);
+ }
+ else if (layer3 ==true){
+ layer1 = false;
+ layer2 = false;
+ layer3 = false;
+ drawplease = true;
+ println("third save",layer1,layer2,layer3);
+ }
+}
